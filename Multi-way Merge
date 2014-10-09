@@ -1,0 +1,53 @@
+template<typename T>
+class comp
+{
+	bool operator()(const T& lhs, const T& rhs)
+	{
+		return lhs->val > rhs->val;
+	}
+}
+
+template<typename T>
+InputIterator
+{
+	T *ptr;
+	Iterator getNext();
+	bool hasNext();
+	T getValue();
+};
+
+
+template<Typename T>
+OutputStream
+{
+	void append(T* element);
+}
+
+OutputStream merge(vector<InputStream> instreams)
+{
+	priority_queue<InputStream::Iterator, vector<InputStream>, comp<InputStream::Iterator> > pq;
+
+	for(auto str: instreams)
+	{
+		InputStream::Iterator it = str.begin()
+		if(it.hasNext()) 
+			pq.push_back(it);
+	}
+
+	OutputStream out;
+
+	while(!pq.empty())
+	{
+		InputStream::Iterator top = pq.top();
+		pq.pop();
+		
+		out.append(top.getValue());
+
+		if(top.hasNext())
+		{
+			top = top.getNext();
+			pq.push(top);
+		}
+	}
+	return out;
+}

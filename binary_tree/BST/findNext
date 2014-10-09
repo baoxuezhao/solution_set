@@ -1,0 +1,53 @@
+Problem: find the smallest node which is larger than the target node. 
+
+1. if there is parent pointer for each node.
+
+Node *findNext(Node *root, Node *target)
+{
+	if(target->right != NULL)
+		return minValue(target->right);
+	
+	Node *cur = target;
+	Node *p = cur->parent;
+	while(p && cur == p->right)
+	{
+		cur = p;
+		p = p->parent;
+	}
+	
+	return p;
+}
+
+
+2. if there is no parent pointer
+
+Node *findNext(Node *root, Node *target)
+{
+	if(target->right != NULL)
+		return minValue(target->right);
+	
+	Node *succ = NULL;
+	while(root != NULL)
+	{
+		if(root->val < target->val)
+		{
+			root = root->right;
+		}
+		else if(root->val > target->val)
+		{
+			succ = root;
+			root = root->left;
+		}
+		else
+			break;
+	}
+	return succ;
+}
+
+
+int minValue(Node *root)
+{
+	while(root->left)
+		root = root->left;
+	return root;
+}

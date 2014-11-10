@@ -1,3 +1,27 @@
+/**
+*
+给你一棵树的根， 比如节点A。
+   A
+   / \
+  B*  C
+ / \  |
+D  E  F
+
+要求删除树中的部分node。比如删除B，结果如下。
+    A
+  / | \
+ D  E  C
+          |
+         F
+
+给你的数据结构如下
+Node {
+    boolean shouldRemove(); // return true if this node needs to be removed    
+}
+
+剩下如何删除，需要什么method，自己讨论和定义。
+*/
+
 #include <iostream>
 #include <vector>
 

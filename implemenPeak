@@ -9,9 +9,14 @@ public class PeekableIterator<T> extends Iterator<T>
     public PeekableIterator<T>()
     {
       super();
-      next = hasNext()?next():null;
+      next = super.hasNext()?super.next():null;
     }
 
+    public void remove()
+    {
+        next = (super.hasNext() ? super.next() : null)
+    }
+    
     public boolean hasNext()
     {
         return (next != null);
@@ -20,7 +25,7 @@ public class PeekableIterator<T> extends Iterator<T>
     public T next()
     {
         T current = next;
-        next = (hasNext() ? next() : null)
+        next = (super.hasNext() ? super.next() : null)
         return current;
     }
 

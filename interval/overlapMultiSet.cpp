@@ -65,7 +65,8 @@ vector<Interval> intersect(vector<vector<Interval> > intervals)
 			if(count[points[i].tag]==0)
 			{
 				prec++;
-                pre=points[i].pos;
+				if(prec == size)
+                	pre=points[i].pos;
 			}
 			count[points[i].tag]++;
 		}
@@ -102,7 +103,7 @@ int main()
     ib.push_back(Interval(4, 9));
     ib.push_back(Interval(10, 15));
 	vector<Interval> ic;
-	ic.push_back(Interval(3, 9));
+	ic.push_back(Interval(3, 6));
 	ic.push_back(Interval(8, 11));
 
 	vector<vector<Interval> > data;

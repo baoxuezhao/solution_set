@@ -7,21 +7,19 @@ using namespace std;
 
 int getStep(int a, int b)
 {
-	if(a == 1)
-		return (b-1);
-	else if(b == 1)
-		return (a-1);
-
 	if(a < b)
 		swap(a, b);
+
 	if(b == 0)
 		return -1;
+	else if(b == 1)
+		return a-1;
 
-	int res = getStep(a-b, b);
+	int res = getStep(a%b, b);
 	if(res == -1)
 		return -1;
 	else
-		return res+1;
+		return res+(a/b);
 }
 
 int leastStep(int target)
@@ -44,10 +42,12 @@ int leastStep(int target)
 
 int main()
 {
+	
 	for(int i=1000; i<100000; i *= 2)
 	{
 		int res = leastStep(i);
 		cout << i << "\t" << res << endl;
 	}
+
 	return 0;
 }

@@ -102,7 +102,7 @@ int main()
 			{
 				if(testCapability(j, laststatus))
 				{
-					dp[h][j] += dp[h-1][laststatus];
+					dp[h][j] += 1;//dp[h-1][laststatus];
 					vector<int> curlevel(lastLevel[i].begin(), lastLevel[i].end());
 					curlevel.push_back(j);
 					result[h].push_back(curlevel);
@@ -111,7 +111,7 @@ int main()
 		}
 	}
 
-	//cout << dp[height-1][allStatus-1] << endl;
+	cout << dp[height-1][allStatus-1] << endl;
 
 	int count = 0;
 	for(int i=0; i<result[height-1].size(); i++)

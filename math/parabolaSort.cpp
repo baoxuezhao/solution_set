@@ -1,3 +1,4 @@
+//给一个有序序列 {x1, x2, ...., xn} 然后二次函数 f(x) = ax^2 + bx + c
 #include <iostream>
 #include <climits>
 #include <cmath>

@@ -4,6 +4,7 @@
  * b) set_interval(time) // 把 interrupt 发送间隔设置为time
  * 问题，如果现在有两个函数A, B。 要使A每t1秒执行一次， B每t2秒执行一次， 要怎么做？ （handler函数里面可以修改PIT的时间间隔）
  */
+//from https://github.com/wolf5x/interview/blob/master/math/PIT.cc
 
 void handler() {
     static int next1 = 0, next2 = 0;

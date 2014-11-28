@@ -1,4 +1,4 @@
-//demo the snake movement
+//demo the snake movement, boundry wrapped
 #include <iostream>
 #include <cstdio>
 #include <fstream>

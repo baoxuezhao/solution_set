@@ -29,6 +29,8 @@ int minCoin(int A[], int k, int n)
 	for(int i=1; i<=k; i++)
 	{
 		dp[i][0] = 0;
+		prev[i][0][0] = i;
+		prev[i][0][1] = 0;
 	}
 
 	for(int i=2; i<=k; i++)
@@ -54,18 +56,19 @@ int minCoin(int A[], int k, int n)
 
 	int i = k;
 	int j = n;
-	int remain = n;
-
+	
 	while(i != prev[i][j][0] || j != prev[i][j][1])
 	{
-		cout << i << "\t" << j << endl;
-		/*
+		int newi = i;
+		int newj = j;
+		
 		if(j != prev[i][j][1])
 		{
 			cout << j-prev[i][j][1] << " ";
-		}*/
-		i = prev[i][j][0];
-		j = prev[i][j][1];
+		}
+
+		i = prev[newi][newj][0];
+		j = prev[newi][newj][1];
 	}
 	cout << endl;
 
@@ -76,7 +79,10 @@ int main()
 {
 	int A[] = {1, 5, 8};
 
-	for(int i=26; i<=26; i++)
-		cout << i << "\t" << minCoin(A, 3, i) << endl;;
+	for(int i=1; i<=26; i++)
+	{
+		int res = minCoin(A, 3, i);
+		cout << i << "\t" << res << endl;
+	}
 	return 0;
 }

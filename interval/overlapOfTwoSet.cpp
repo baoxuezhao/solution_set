@@ -1,73 +1,110 @@
 //很多区间已知 请求是一系列整数 判断这个整数是否在这些区间里面 问我如何优化对这些请求的处理
 
 #include <iostream>
-#include <vector>
-#include <string>
-#include <cstring>
 #include <cstdio>
-#include <cstdlib>
+#include <cstring>
 using namespace std;
 
-struct Interval
-{
-	int start;
-	int end;
-	Interval(int s, int e): start(s), end(e){};
-};
+#define SIZE 100
 
-Interval overlap(Interval &in1, Interval &in2)
+struct Node
 {
-	if(in1.start > in2.end || in2.start > in1.end)
-		return Interval(-1, -1);
-	else
-		return Interval(max(in1.start, in2.start), min(in1.end, in2.end));
+	int L, R, count;
+	bool colored;
+}segTree[SIZE << 2];
+
+
+void pushDown(int rt)
+{
+	if(!segTree[rt].colored)
+	{
+		segTree[2*rt].count += segTree[rt].count;
+		segTree[2*rt+1].count += segTree[rt].count;
+        segTree[2*rt].colored = segTree[2*rt+1].colored = false;
+        segTree[rt].colored = true;
+        segTree[rt].count = 0;
+	}
 }
 
-//merge two sorted interval set
-vector<Interval> overlapTwoSet(vector<Interval> &set1, vector<Interval> &set2)
+void buildTree(int L,int R, int root)
 {
-	vector<Interval> out;
-	if(set1.size() == 0 || set2.size() == 0) return out;
+    segTree[root].L = L;
+    segTree[root].R = R;
+    segTree[root].count = 0;
+    segTree[root].colored = false;
+    if(L == R) return;
+            
+    int mid = (L + R) / 2;
+    buildTree(L, mid, root * 2);
+    buildTree(mid+1, R, root * 2 + 1);
+}
 
-	int idx1 = 0, idx2 = 0;
-	while(idx1 < set1.size() && idx2 < set2.size())
+void update(int start, int end, int root)
+{
+	if(start > end)
+		return;
+
+	int L = segTree[root].L;
+	int R = segTree[root].R;
+	
+	if(!segTree[root].colored)
 	{
-		Interval cur1 = set1[idx1];
-		Interval cur2 = set2[idx2];
-
-		Interval ol = overlap(cur1, cur2);
-		if(ol.start != -1 && ol.end != -1)
-			out.push_back(ol);
-		if(cur1.end < cur2.end)
-			idx1++;
-		else
-			idx2++;
+		if(start == L && end == R)
+		{
+			segTree[root].count++;
+			segTree[root].colored = false;
+			return;
+		}
+		pushDown(root);
 	}
-	return out;
+
+	int mid = (L+R)/2;
+	if(start <= mid)
+		update(start, min(mid, end), 2*root);
+	if(end > mid)
+		update(max(mid+1, start), end, 2*root+1);
+
+	segTree[root].colored = true;
+}
+
+int query(int P, int root)
+{
+	int L = segTree[root].L;
+	int R = segTree[root].R;
+
+	if(!segTree[root].colored)
+		return segTree[root].count;
+
+	//pushDown(root);
+
+	int mid = (L+R)/2;
+	if(P <= mid)
+		return query(P, 2*root);
+	else
+		return query(P, 2*root+1);
 }
 
 int main()
 {
+    int N,M;
+    
+    scanf("%d%d",&N, &M);
 
-	vector<Interval> set1;
-	vector<Interval> set2;
+    int root = 1;
+    buildTree(1,N,root);
 
-	set1.push_back(Interval(0, 3));
-	set1.push_back(Interval(4, 6));
-	set1.push_back(Interval(8, 10));
-	set1.push_back(Interval(12, 13));
-	set1.push_back(Interval(15, 17));
-	set1.push_back(Interval(19, 21));
+    int l,r,c;
+    while(M--)
+    {
+        scanf("%d%d",&l,&r);
+        update(l,r,root);
 
-	set2.push_back(Interval(2, 5));
-	set2.push_back(Interval(7, 9));
-	set2.push_back(Interval(11, 14));
+		for(int i = 1; i <= 2 * N - 1; ++i)
+            printf("%3d %3d %3d %3d colored %3d\n",i,segTree[i].L,segTree[i].R,segTree[i].count,segTree[i].colored);
+	    cout << endl;
+    }
 
-	vector<Interval> result = overlapTwoSet(set1, set2);
-
-	for(int i=0; i<result.size(); i++)
-	{
-		cout << result[i].start << "\t" << result[i].end << endl;
-	}
-	return 0;
+    for(int i=1; i<=N; i++)
+    	printf("%d\t%d\n", i, query(i, root));
+    return 0;
 }

@@ -22,3 +22,5 @@ E1, and other points of rect1 lies in another side, then this edge
 is a separating line.
 this method can also be used to check the overlap relation of any two
 vertex polygon other than rects.
+
+ref: http://stackoverflow.com/questions/115426/algorithm-to-detect-intersection-of-two-rectangles

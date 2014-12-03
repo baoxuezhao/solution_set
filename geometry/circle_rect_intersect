@@ -1,0 +1,24 @@
+http://stackoverflow.com/questions/401847/circle-rectangle-collision-detection-intersection
+
+1) Either the circle's centre lies inside the rectangle, or
+2) One of the edges of the rectangle intersects the circle.
+
+It is easy to compute condition 1.
+For condition 2, compute the intersection point (P1 and P2) of 
+the extended line of each edge (AB) with the circle, if segment  
+AB and P1P2 has overlap, then this edge overlap or completely contained
+in the circle.
+
+==========================
+
+2) rectangle and rectangle If the rectangle are axially aligned, 
+see the projection of the two rectangle on each of the axial.
+
+==================
+3) if two rect are not axially parallelized, then we can test
+each of the eight edges.
+for edge E1 in rect1, if all points of rec2 lies in one side of
+E1, and other points of rect1 lies in another side, then this edge
+is a separating line.
+this method can also be used to check the overlap relation of any two
+vertex polygon other than rects.

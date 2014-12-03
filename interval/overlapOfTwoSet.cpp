@@ -1,4 +1,5 @@
-//overlap of two set of interval with continous points
+//很多区间已知 请求是一系列整数 判断这个整数是否在这些区间里面 问我如何优化对这些请求的处理
+
 #include <iostream>
 #include <vector>
 #include <string>

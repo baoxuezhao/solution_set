@@ -1,0 +1,10 @@
+from http://stackoverflow.com/questions/1119627/how-to-test-if-a-point-is-inside-of-a-convex-polygon-in-2d-integer-coordinates
+
+If it is convex, a trivial way to check it is that the point is laying on the same side of 
+all the segments (if traversed in the same order).
+You can check that easily with the cross product (as it is proportional to the cosine of 
+the angle formed between the segment and the point, 
+those with positive sign would lay on the right side and those with negative sign on the left side).
+
+if it is not convex, the Ray casting algorithm can be applied.
+

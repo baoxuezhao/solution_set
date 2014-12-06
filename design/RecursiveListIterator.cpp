@@ -1,4 +1,6 @@
 /*
+一个java的class,有一个变量是一个list, list可以里面的element可以是数，也可以是list, 实现hasNext, next
+
 [1,2,3,4,5]
 []
 [6]

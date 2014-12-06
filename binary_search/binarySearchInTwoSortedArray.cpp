@@ -7,10 +7,11 @@ using namespace std;
 
 int partition(int A[], int s, int e)
 {
-	int len = e-s+1;
-	int pivot = A[rand()%(e-s+1)+s];
+	int r = rand()%(e-s+1)+s;
+	int pivot = A[r];
+	swap(A[r], A[e]);
 
-	int left = s, right = e;
+	int left = s, right = e-1;
 
 	while(left <= right)
 	{
@@ -24,15 +25,15 @@ int partition(int A[], int s, int e)
 			right--;
 		}
 	}
-
-	return left-1;
+	swap(A[left], A[e]);
+	return left;
 }
 
 void quicksort(int A[], int s, int e)
 {
 	int index = partition(A, s, e);
-	if(s < index)
-		quicksort(A, s, index);
+	if(s < index-1)
+		quicksort(A, s, index-1);
 	if(index+1 < e)
 		quicksort(A, index+1, e);
 }
@@ -62,7 +63,7 @@ int bsearch(int A[], int m, int B[], int n, int target)
 
 int main()
 {
-    int n = 500;
+    int n = 500000;
     int A[n];
     int B[n];
     int C[2*n];

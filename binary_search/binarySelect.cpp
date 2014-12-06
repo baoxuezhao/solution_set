@@ -7,10 +7,10 @@ using namespace std;
 
 int partition(int A[], int s, int e)
 {
-	int len = e-s+1;
-	int pivot = A[rand()%(e-s+1)+s];
-
-	int left = s, right = e;
+	int r = rand()%(e-s+1)+s;
+	swap(A[r], A[e]);
+	int pivot = A[e];
+	int left = s, right = e-1;
 
 	while(left <= right)
 	{
@@ -24,59 +24,60 @@ int partition(int A[], int s, int e)
 			right--;
 		}
 	}
+	swap(A[left], A[e]);
 
-	return left-1;
+	return left; //return the pivot idx
 }
 
 int select_kth(int A[], int s, int e, int k)
 {
-	int left_last = partition(A, s, e);
+	int mid = partition(A, s, e);
 
-	int left_index = left_last - s;
+	int mid_index = mid - s;
 
-	if(k == left_index)
-		return A[left_last];
-	else if(left_index > k)
-		return select_kth(A, s, left_last, k);
+	if(k == mid_index)
+		return A[mid];
+	else if(mid_index > k)
+		return select_kth(A, s, mid-1, k);
 	else
-		return select_kth(A, left_last+1, e, k-(left_index+1));
+		return select_kth(A, mid+1, e, k-(mid_index+1));
 }
 
 void quicksort(int A[], int s, int e)
 {
-	int index = partition(A, s, e);
-	if(s < index)
-		quicksort(A, s, index);
-	if(index+1 < e)
-		quicksort(A, index+1, e);
+	int mid = partition(A, s, e);
+	if(s < mid-1)
+		quicksort(A, s, mid-1);
+	if(mid+1 < e)
+		quicksort(A, mid+1, e);
 }
 
 int main()
 {
-    int n = 500000;
+    int n = 50000;
     int a[n];
     int b[n];
     for(int i=0; i<n; i++)
     {
-        a[i] = rand()%10000;
+        a[i] = rand()%1000000;
         b[i] = a[i];
     }
     cout << endl;
 
     sort(b, b+n);
-
-    /*
+    
     for(int i=0; i<n; i++)
     {
         if(select_kth(a,0,n-1,i) != b[i])
         	cout << "error " << endl;
-    }*/
+    }
 
+    /*
     quicksort(a, 0, n-1);
     for(int i=0; i<n; i++)
     {
     	if(a[i] != b[i])
     		cout << "error " << endl;
-    }
+    }*/
     return 0;
 }

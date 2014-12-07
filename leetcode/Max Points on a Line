@@ -1,0 +1,49 @@
+/**
+ * Definition for a point.
+ * struct Point {
+ *     int x;
+ *     int y;
+ *     Point() : x(0), y(0) {}
+ *     Point(int a, int b) : x(a), y(b) {}
+ * };
+ */
+class Solution {
+public:
+    int maxPoints(vector<Point> &points) {
+        const int n = points.size();
+        int result = 0;
+        int curmax = 0;
+        
+        unordered_map<double, int> slopes;
+        for(int i=0; i<points.size(); i++)
+        {
+            slopes.clear();
+            curmax = 0;
+            Point p1 = points[i];
+            int same = 1;
+            for(int j=i+1; j<points.size(); j++)
+            {
+                Point p2 = points[j];
+                if(p1.x == p2.x)
+                {
+                    if(p1.y == p2.y) 
+                        same++;
+                    else
+                    {
+                        double s = std::numeric_limits<double>::infinity();
+                        slopes[s]++;
+                        curmax = max(curmax, slopes[s]);
+                    }
+                }
+                else
+                {
+                    double s = (double(p2.y-p1.y))/(p2.x-p1.x);
+                    slopes[s]++;
+                    curmax = max(curmax, slopes[s]);
+                }
+            }
+            result = max(result, curmax+same);
+        }
+        return result;
+    }
+};

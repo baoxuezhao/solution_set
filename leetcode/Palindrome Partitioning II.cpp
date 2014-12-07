@@ -6,6 +6,7 @@ public:
         
         vector<vector<bool> > f(n, vector<bool>(n, false));
         
+        //compute palindrome of each substring
         for(int len=1; len<=n; len++)
         {
             for(int start=0; start+len-1<n; start++)

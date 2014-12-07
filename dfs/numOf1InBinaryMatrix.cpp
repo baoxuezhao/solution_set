@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <queue>
 
 using namespace std;
 
@@ -24,7 +25,50 @@ void dfs(vector<vector<int> > &matrix,
 }
 
 //assume four-connection
-int numOfConnectedOne(vector<vector<int> > &matrix, int i, int j)
+int numOfConnectedOneDFS(vector<vector<int> > &matrix, int i, int j)
+{
+	const int m = matrix.size();
+	const int n = matrix[0].size();
+
+	int count = 0;
+	vector<vector<bool> > visit(m, vector<bool>(n, false));
+	dfs(matrix, visit, i, j, count);
+	return count;
+}
+
+
+int numOfConnectedOneBFS(vector<vector<int> > &matrix, int i, int j)
+{
+	const int m = matrix.size();
+	const int n = matrix[0].size();
+
+	int count = 0;
+	vector<vector<bool> > visit(m, vector<bool>(n, false));
+	queue<pair<int,int> > Q;
+	Q.push(make_pair(i, j));
+
+	while(!Q.empty())
+	{
+		pair<int, int> p = Q.front();
+		Q.pop();
+		if(p.first >= m || p.first < 0 || p.second >= n || p.second < 0)
+			continue;
+		if(visit[p.first][p.second] || matrix[p.first][p.second] == 0)
+			continue;
+
+		count++;
+		visit[p.first][p.second] = true;
+
+		Q.push(make_pair(p.first, p.second+1));
+		Q.push(make_pair(p.first, p.second-1));
+		Q.push(make_pair(p.first-1, p.second));
+		Q.push(make_pair(p.first+1, p.second));
+	}
+
+	return count;
+}
+
+int numOfConnectedOneBFS_Parallel(vector<vector<int> > &matrix, int i, int j)
 {
 	const int m = matrix.size();
 	const int n = matrix[0].size();
@@ -46,11 +90,26 @@ int main()
 		{0, 0, 1, 1, 1}
 	};
 
-	cout << numOfConnectedOne(matrix, 0, 0) << endl;
-	cout << numOfConnectedOne(matrix, 0, 1) << endl;
-	cout << numOfConnectedOne(matrix, 1, 1) << endl;
-	cout << numOfConnectedOne(matrix, 8, 8) << endl;
-	cout << numOfConnectedOne(matrix, 4, 4) << endl;
-	cout << numOfConnectedOne(matrix, 2, 0) << endl;
+	cout << numOfConnectedOneDFS(matrix, 0, 0) << endl;
+	cout << numOfConnectedOneBFS(matrix, 0, 0) << endl;
+
+	cout << numOfConnectedOneDFS(matrix, 0, 1) << endl;
+	cout << numOfConnectedOneBFS(matrix, 0, 1) << endl;
+
+	cout << numOfConnectedOneDFS(matrix, 1, 1) << endl;
+	cout << numOfConnectedOneBFS(matrix, 1, 1) << endl;
+
+	cout << numOfConnectedOneDFS(matrix, 8, 8) << endl;
+	cout << numOfConnectedOneBFS(matrix, 8, 8) << endl;
+
+	cout << numOfConnectedOneDFS(matrix, 3, 4) << endl;
+	cout << numOfConnectedOneBFS(matrix, 3, 4) << endl;
+
+	cout << numOfConnectedOneDFS(matrix, 4, 4) << endl;
+	cout << numOfConnectedOneBFS(matrix, 4, 4) << endl;
+
+	cout << numOfConnectedOneDFS(matrix, 2, 0) << endl;
+	cout << numOfConnectedOneBFS(matrix, 2, 0) << endl;
+
 	return 0;
 }

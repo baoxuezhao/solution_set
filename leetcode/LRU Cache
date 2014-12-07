@@ -1,4 +1,5 @@
 //comments: do not call list::size frequently, since it is a time-consuming operation.
+//when eliminate a node from the end, remember to delete the record from the hashmap
 
 typedef list<pair<int,int> >::iterator listIter;
 

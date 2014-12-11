@@ -12,9 +12,11 @@ public class PeekableIterator<T> extends Iterator<T>
       next = super.hasNext()?super.next():null;
     }
 
+    //http://blog.csdn.net/scarecrow_ss/article/details/5957300
     public void remove()
     {
-        next = (super.hasNext() ? super.next() : null)
+        //unsupported operation
+        //next = (super.hasNext() ? super.next() : null)
     }
     
     public boolean hasNext()

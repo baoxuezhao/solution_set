@@ -31,7 +31,7 @@ public:
                 {
                     for(int j=0; j<vec2.size(); j++)
                     {
-                        if(vec[i].second < vec2[j].first)
+                        if(vec[i].second < vec2[j].first) //????
                         {
                             vector<int> pp{num[vec[i].first], num[vec[i].second], num[vec2[j].first], num[vec2[j].second]};
                             sort(pp.begin(), pp.end());

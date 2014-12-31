@@ -1,53 +1,61 @@
 class Solution {
 public:
-
     string fractionToDecimal(int numerator1, int denominator1) {
-        long long numerator = numerator1;
-        long long denominator = denominator1;
+        if(numerator1 == 0)
+            return "0";
         
-        if(numerator == 0) return "0";
-        
+        bool sign = (numerator1 >= 0) ^ (denominator1 >= 0);
         string res;
-        if(numerator < 0 ^ denominator < 0) 
-            res += "-";
+        if(sign) res += "-";
         
-        numerator = abs(numerator);
+        long long numerator = numerator1; //???
+        long long denominator = denominator1; //???
+        
+        numerator = abs(numerator); 
         denominator = abs(denominator);
         
-        long long integer = numerator/denominator;
-        do
-        {
-            res += integer%10 + '0';
-            integer /= 10;
-        }while(integer);
-        
-        if(res[0] == '-')
-            reverse(res.begin()+1, res.end());
-        else
-            reverse(res.begin(), res.end());
-        
+        res += itoa(numerator/denominator);
         numerator %= denominator;
+        
         if(numerator == 0)
             return res;
-        res += ".";
-
-        unordered_map<long, int> map;
         
-        long long rem = numerator*10;
-        while(rem != 0)
+        res += ".";
+        unordered_map<int, int> hash;
+        
+        while(numerator)
         {
-            if(map.find(rem) != map.end())
+            if(hash.find(numerator) != hash.end())
             {
-                string part1 = res.substr(0, map[rem]);
-                string part2 = res.substr(map[rem], res.length()-map[rem]);
-                return part1 + "(" + part2 + ")";
+                string result;
+                int pos = hash[numerator];
+                result += res.substr(0, pos);
+                result += "(";
+                result += res.substr(pos, res.size()-pos);
+                result += ")";
+                return result;
             }
             
-            map[rem] = res.length();
-            res += ('0'+rem / denominator);
-            rem = (rem % denominator)*10;
+            hash[numerator] = res.size();
+            numerator *= 10;
+            res += (numerator/denominator + '0');
+            numerator %= denominator;
         }
-        
+        return res;
+    }
+    
+    string itoa(long long n) //???
+    {
+        if(n == 0)
+            return "0"; ///???
+            
+        string res;
+        while(n)
+        {
+            res += (n%10 + '0');
+            n /= 10;
+        }
+        reverse(res.begin(), res.end());
         return res;
     }
 };

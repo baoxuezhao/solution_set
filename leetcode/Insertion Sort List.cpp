@@ -25,8 +25,7 @@ public:
                 }
                 p->next = cur;
                 cur->next = t;
-                
-                cur = prev->next;
+                cur = prev->next; //update next cur
             }
         }
         return dummy.next;

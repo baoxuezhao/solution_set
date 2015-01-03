@@ -25,4 +25,26 @@ public:
 };
 
 //solution 2
-
+class Solution {
+public:
+    vector<vector<int> > subsetsWithDup(vector<int> &S) {
+        sort(S.begin(), S.end());
+        vector<vector<int> > res(1);
+        
+        int prev_size = 0;
+        for(int i=0; i<S.size(); i++)
+        {
+            const int size = res.size();
+            for(int j=0; j<size; j++)
+            {
+                if(i == 0 || S[i] != S[i-1] || j >= prev_size)
+                {
+                    res.push_back(res[j]);
+                    res.back().push_back(S[i]);
+                }
+            }
+            prev_size = size;
+        }
+        return res;
+    }
+};

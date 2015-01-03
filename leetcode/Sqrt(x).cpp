@@ -26,3 +26,18 @@ public:
         return prev;
     }
 };
+
+//Newton algorithm
+class Solution {
+public:
+    int sqrt(int x) {
+    
+        double p = 2, pp = 1;
+        while(abs(pp-p) > 1e-6)
+        {
+            pp = p;
+            p = p/2.0 + x/(2.0*p);
+        }
+        return (int)pp;
+    }
+};

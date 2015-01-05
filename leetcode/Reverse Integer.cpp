@@ -4,11 +4,7 @@ public:
         if(x < 0) 
         {
             if(x == INT_MIN) return 0;
-            int val = reverse(0-x);
-            if(val == 0)
-                return 0;
-            else
-                return 0-val;
+            return 0-reverse(0-x);
         }
         
         int res = 0;

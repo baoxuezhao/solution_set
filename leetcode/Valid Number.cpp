@@ -48,3 +48,52 @@ public:
         
     }
 };
+
+
+//no state machine solution
+//reference: http://www.yanyulin.info/pages/2014/10/38958011441714.html
+class Solution {
+public:
+    bool isNumber(const char *s) {
+        bool res = true;
+        
+        bool num = false;
+        bool dot = false;
+        bool exp1 = false;
+        
+        while(*s == ' ') s++;
+        if(*s == 0) return false;
+        
+        int n = strlen(s);
+        while(n >= 0 && s[n-1] == ' ') n--;
+        
+        for(int i=0; i<n; i++)
+        {
+            if(s[i] >= '0' && s[i] <= '9') 
+            {
+                num = true;
+            }
+            else if(s[i] == '.')
+            {
+                if(exp1 || dot) 
+                    return false;
+                dot = true;
+            }
+            else if(s[i] == 'e' || s[i] == 'E')
+            {
+                if(!num || exp1) 
+                    return false;
+                exp1 = true;
+                num = false;
+            }
+            else if(s[i] == '-' || s[i] == '+')
+            {
+                if(i != 0 && s[i-1] != 'e' && s[i-1] != 'E') return false;
+            }
+            else
+                return false;
+        }
+        
+        return num;
+    }
+};

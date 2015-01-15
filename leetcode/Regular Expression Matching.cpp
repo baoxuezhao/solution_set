@@ -5,7 +5,7 @@ public:
         
         if(*(p+1) != '*')
         {
-            if((*p == '.' && *s != 0) || (*s == *p))
+            if((*p == '.' && *s != 0) || (*s == *p))  //??? becareful
                 return isMatch(s+1, p+1);
             else
                 return false;

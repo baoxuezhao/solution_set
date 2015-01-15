@@ -41,3 +41,23 @@ public:
         return (int)pp;
     }
 };
+
+
+//another binary search using doubles
+class Solution {
+public:
+    int sqrt(int x) {
+        
+    	double EPS = 0.00001;
+    	double left = 0.0, right = max(1, x), mid;
+    	while(left + EPS < right)
+    	{
+    		mid = (left+right)/2.0;
+    		if(mid*mid > x)
+    			right = mid;
+    		else
+    			left = mid;
+    	}
+    	return (int)right;
+    }
+};

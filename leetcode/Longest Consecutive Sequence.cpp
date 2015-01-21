@@ -15,7 +15,7 @@ public:
             
             int left = p.first-1;
             int len = 1;
-            while(hash[left])
+            while(hash.find(left) != hash.end() && hash[left])
             {
                 hash[left] = false;
                 left--;
@@ -23,7 +23,7 @@ public:
             }
             
             int right = p.first+1;
-            while(hash[right])
+            while(hash.find(right) != hash.end() && hash[right])
             {
                 hash[right] = false;
                 right++;

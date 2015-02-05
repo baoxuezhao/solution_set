@@ -39,3 +39,24 @@ public:
         return true;
     }
 };
+
+
+//recursion approach
+class Solution {
+public:
+    bool isValidBST(TreeNode *root) {
+        int prev = INT_MIN;
+        bool first = true;
+        return isValidBST(root, prev, first);
+    }
+    
+    bool isValidBST(TreeNode *root, int &prev, bool &first)
+    {
+        if(!root) return true;
+        if(!isValidBST(root->left, prev, first)) return false;
+        if(!first && root->val <= prev) return false;
+        first = false;
+        prev = root->val;
+        return isValidBST(root->right, prev, first);
+    }
+};

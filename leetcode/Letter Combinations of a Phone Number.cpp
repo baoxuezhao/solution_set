@@ -25,3 +25,26 @@ public:
         }
     }
 };
+
+
+//iterative solution
+class Solution {
+public:
+    vector<string> letterCombinations(string digits) {
+        string map[] = {"", "", "abc", "def", "ghi", "jkl", "mno", "qprs", "tuv", "wxyz"};
+        vector<string> res;
+        res.push_back("");
+        
+        for(int i=0; i<digits.size(); i++)
+        {
+            string str = map[digits[i]-'0'];
+            int n = res.size();
+            vector<string> res2;
+            for(int j=0; j<n; j++)
+                for(int k=0; k<str.size(); k++)
+                    res2.push_back(res[j]+str[k]);
+            res = res2;
+        }
+        return res;
+    }
+};

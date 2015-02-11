@@ -25,3 +25,32 @@ public:
         return sum;
     }
 };
+
+//one pass algorithm with two pointers.
+class Solution {
+public:
+    int trap(int A[], int n) {
+        int sum = 0;
+        if(n < 2) return 0;
+        int l=1, r=n-2;
+        int lmax = A[0], rmax = A[n-1];
+        
+        while(l <= r)
+        {
+            if(lmax <= rmax)
+            {
+                sum += max(0, min(lmax, rmax)-A[l]);
+                lmax = max(lmax, A[l]);
+                l++;
+            }
+            else
+            {
+                sum += max(0, min(lmax, rmax)-A[r]);
+                rmax = max(rmax, A[r]);
+                r--;
+            }
+        }
+        return sum;
+    }
+};
+

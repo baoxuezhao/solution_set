@@ -1,3 +1,6 @@
+
+//source: http://www.meetqun.com/thread-425-1-1.html
+
 #include <iostream>
 using namespace std;
 

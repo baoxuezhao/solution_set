@@ -20,3 +20,27 @@ public:
         return longest;
     }
 };
+
+
+//Solution 2: less memory, more time
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        bool map[256];
+        memset(map, false, sizeof(map));
+        int start = 0;
+        int n = s.size();
+        int longest = 0;
+        for(int i=0; i<n; i++)
+        {
+            while(map[s[i]])
+            {
+                map[s[start]] = false;
+                start++;
+            }
+            map[s[i]] = true;
+            longest = max(longest, i-start+1);
+        }
+        return longest;
+    }
+};

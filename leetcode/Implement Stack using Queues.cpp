@@ -2,60 +2,39 @@ class Stack {
 public:
     // Push element x onto stack.
     void push(int x) {
-        if (!queue1.empty()) {
-            queue1.push_back(x);
-        } else {
-            queue2.push_back(x);
-        }
+        que[cur].push(x);
     }
 
     // Removes the element on top of the stack.
     void pop() {
-        if (queue1.empty()) {
-            while (queue2.size() > 1) {
-                queue1.push_back(queue2.front());
-                queue2.pop_front();
-            }
-            queue2.pop_front();
-        } else {
-            while (queue1.size() > 1) {
-                queue2.push_back(queue1.front());
-                queue1.pop_front();
-            }
-            queue1.pop_front();
+        while (que[cur].size() > 1) {
+            que[1-cur].push(que[cur].front());
+            que[cur].pop();
         }
+        que[cur].pop();
+        cur = 1-cur;
     }
 
     // Get the top element.
     int top() {
         int val;
-        if (queue1.empty()) {
-            while (queue2.size() > 1) {
-                queue1.push_back(queue2.front());
-                queue2.pop_front();
-            }
-            val = queue2.front();
-            queue1.push_back(val);
-            queue2.pop_front();
-        } else {
-            while (queue1.size() > 1) {
-                queue2.push_back(queue1.front());
-                queue1.pop_front();
-            }
-            val = queue1.front();
-            queue2.push_back(val);
-            queue1.pop_front();
+        while (que[cur].size() > 1) {
+            que[1-cur].push(que[cur].front());
+            que[cur].pop();
         }
+        val = que[cur].front();
+        que[cur].pop();
+        que[1-cur].push(val);
+        cur = 1-cur;
         return val;
     }
 
     // Return whether the stack is empty.
     bool empty() {
-        return queue1.empty() && queue2.empty();
+        return que[cur].empty();
     }
     
 private:
-    deque<int> queue1;
-    deque<int> queue2;
+    queue<int> que[2];
+    int cur = 0;
 };
-

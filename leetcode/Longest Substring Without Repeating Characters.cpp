@@ -44,3 +44,24 @@ public:
         return longest;
     }
 };
+
+// Solution 3:
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        bool map[256] = {false};
+        int start = 0; 
+        int end = 0;
+        int max_len = 0;
+        while (end>=start && end < s.size()) {
+            while (end < s.size() && map[(int)s[end]] == false) {
+                map[(int)s[end]] = true;
+                end++;
+            }
+            max_len = std::max(max_len, (end-start));
+            map[(int)s[start]] = false;
+            start++;
+        }
+        return max_len;
+    }
+};

@@ -59,3 +59,27 @@ public:
         }
     }
 };
+
+// precise solution
+class Solution {
+public:
+    vector<string> generateParenthesis(int n) {
+        vector<string> res;
+        std::string cur;
+        dfs(res, cur, 0, 0, n);
+        return res;
+    }
+    
+    void dfs(std::vector<string>& res, string cur, int left, int right, int max) {
+        if (cur.size() == max * 2) {
+            res.push_back(cur);
+            return;
+        }
+        if (left < max) {
+            dfs(res, cur + "(", left+1, right, max);
+        }
+        if (right < left) {
+            dfs(res, cur + ")", left, right+1, max);
+        }
+    }
+};

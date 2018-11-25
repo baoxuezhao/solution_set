@@ -37,3 +37,46 @@ public:
         return res;
     }
 };
+
+// new solution
+class Solution {
+public:
+    vector<int> spiralOrder(vector<vector<int>>& matrix) {
+        vector<int> res;
+        int m = matrix.size();
+        if (m == 0) {
+            return res;
+        }
+        int n = matrix[0].size();
+        
+        int m_start = 0;
+        int n_start = 0;
+        
+        int m_end = m - 1;
+        int n_end = n - 1;
+        
+        while (m_end >= m_start && n_end >= n_start) {
+            for (int i = n_start; i <= n_end; ++i) {
+                res.push_back(matrix[m_start][i]);
+            }
+            for (int i = m_start+1; i <= m_end-1; ++i) {
+                res.push_back(matrix[i][n_end]);
+            }
+            if (m_end > m_start) {
+                for (int i = n_end; i >= n_start; --i) {
+                    res.push_back(matrix[m_end][i]);
+                }
+            }
+            if (n_end > n_start) {
+                for (int i = m_end-1; i>=m_start+1; --i) {
+                    res.push_back(matrix[i][n_start]);
+                }
+            }
+            m_start += 1;
+            n_start += 1;
+            m_end -= 1;
+            n_end -= 1;
+        }
+        return res;
+    }
+};
